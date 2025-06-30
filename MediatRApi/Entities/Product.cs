@@ -11,5 +11,7 @@ namespace MediatRApi.Entities
     public byte[]? Image { get; set; }
     public int CategoryId { get; set; }
     public Category Category { get; set; } = null!;
+    public ICollection<ProductImage>? ProductImages { get; set; }
+
   }
 }

@@ -1,3 +1,4 @@
+
 namespace MediatRApi.Application.Common.Responses
 {
   public class ProductResponse
@@ -10,5 +11,15 @@ namespace MediatRApi.Application.Common.Responses
     public bool IsCarousel { get; set; } = false;
     public byte[]? Image { get; set; }
     public int CategoryId { get; set; }
+    public ICollection<ProductImageResponse>? ProductImages { get; set; }
   }
+  public class ProductImageResponse
+  {
+    public int Id { get; set; }
+    public int ProductId { get; set; }
+    public string FileName { get; set; } = null!;
+    public bool IsCover { get; set; }
+    public byte[] Image { get; set; } = [];
+  }
+
 }

@@ -7,10 +7,11 @@ namespace MediatRApi.Application.Common.Mappings;
 
 public class MappingProfile : Profile
 {
-    public MappingProfile()
-    {
-        CreateMap<DemoEntity, DemoEntityResponse>();
-        CreateMap<Category, CategoryResponse>();
-        CreateMap<Product, ProductResponse>();
-    }
-} 
+  public MappingProfile()
+  {
+    CreateMap<DemoEntity, DemoEntityResponse>();
+    CreateMap<Category, CategoryResponse>();
+    CreateMap<Product, ProductResponse>();
+    CreateMap<ProductImage, ProductImageResponse>();
+  }
+}

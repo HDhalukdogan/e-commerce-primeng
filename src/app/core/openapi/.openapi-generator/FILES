@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 README.md
 api.base.service.ts
 api.module.ts
@@ -13,8 +12,11 @@ git_push.sh
 index.ts
 model/categoryResponse.ts
 model/createDemoEntityCommand.ts
+model/createProductCommand.ts
 model/models.ts
+model/productImageResponse.ts
 model/productResponse.ts
 model/updateDemoEntityCommand.ts
+model/updateProductCommand.ts
 param.ts
 variables.ts

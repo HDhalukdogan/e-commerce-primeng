@@ -6,7 +6,6 @@ import { DialogModule } from 'primeng/dialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin',
@@ -28,11 +27,15 @@ export class Admin implements OnInit {
   displayCategoryModal = false;
   displayProductModal = false;
 
-  categoryImageFile: File | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  editCategoryData: CategoryResponse | null = null;
+  editProductData: ProductResponse | null = null;
+
+  constructor(private fb: FormBuilder) {
     this.categoryForm = this.fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      description: ['', Validators.required],
+      image: [null],
     });
 
     this.productForm = this.fb.group({
@@ -41,7 +44,6 @@ export class Admin implements OnInit {
       price: [0, Validators.required],
       isShow: [true],
       isCarousel: [false],
-      image: [null],
       categoryId: [null, Validators.required]
     });
   }
@@ -64,55 +66,144 @@ export class Admin implements OnInit {
 
   openCategoryModal() {
     this.categoryForm.reset();
+    this.editCategoryData = null;
     this.displayCategoryModal = true;
   }
 
-  openProductModal() {
-    this.productForm.reset();
-    this.displayProductModal = true;
-  }
-
-  onCategoryImageChange(event: any) {
-    this.categoryImageFile = event.target.files[0];
+  editCategory(cat: CategoryResponse) {
+    this.categoryForm.patchValue({ name: cat.name, description: cat.description });
+    this.editCategoryData = cat;
+    this.displayCategoryModal = true;
   }
 
   submitCategory() {
     if (this.categoryForm.valid) {
-      const formData = new FormData();
-      formData.append('name', this.categoryForm.value.name);
-      if (this.categoryImageFile) {
-        formData.append('image', this.categoryImageFile);
+      const { name, description, image } = this.categoryForm.value;
+      if (this.editCategoryData) {
+        this.categoriesService.apiCategoriesPut(this.editCategoryData.id, name, description, image).subscribe(() => {
+          this.displayCategoryModal = false;
+          this.getCategories();
+          this.editCategoryData = null;
+        });
+      } else {
+        this.categoriesService.apiCategoriesPost(name, description, image).subscribe(() => {
+          this.displayCategoryModal = false;
+          this.getCategories();
+        });
       }
-      this.http.post('/api/categories', formData).subscribe(() => {
-        this.displayCategoryModal = false;
-        this.getCategories();
-        this.categoryImageFile = null;
-      });
     }
+  }
+
+  openProductModal() {
+    this.productForm.reset({
+      name: '',
+      description: '',
+      price: 0,
+      isShow: true,
+      isCarousel: false,
+      categoryId: null
+    });
+    this.editProductData = null;
+    this.displayProductModal = true;
+  }
+
+  editProduct(prod: ProductResponse) {
+    this.productForm.patchValue({
+      name: prod.name,
+      description: prod.description,
+      price: prod.price,
+      isShow: prod.isShow,
+      isCarousel: prod.isCarousel,
+      categoryId: prod.categoryId
+    });
+    this.editProductData = prod;
+    this.displayProductModal = true;
   }
 
   submitProduct() {
     if (this.productForm.valid) {
-      const { name, description, price, isShow, isCarousel, image, categoryId } = this.productForm.value;
-      this.productsService.apiProductsPost(
-        name,
-        description,
-        price,
-        isShow,
-        isCarousel,
-        image,
-        categoryId
-      ).subscribe(() => {
-        this.displayProductModal = false;
+      if (this.editProductData) {
+        this.productsService.apiProductsPut(
+          { ...this.productForm.value, id: this.editProductData.id }
+        ).subscribe(() => {
+          this.displayProductModal = false;
+          this.getProducts();
+          this.editProductData = null;
+        });
+      } else {
+        this.productsService.apiProductsPost(
+          this.productForm.value
+        ).subscribe(() => {
+          this.displayProductModal = false;
+          this.getProducts();
+        });
+      }
+    }
+  }
+
+  onFileChange(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+    }
+  }
+  onCategoryImageChange(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+      this.categoryForm.patchValue({ image: input.files[0] });
+    }
+  }
+
+  deleteCategory(category: CategoryResponse) {
+    if (category.id === undefined) {
+      alert('Category ID is missing. Cannot delete this category.');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete category "${category.name}"?`)) {
+      this.categoriesService.apiCategoriesIdDelete(category.id).subscribe(() => {
+        this.getCategories();
+      });
+    }
+  }
+
+  deleteProduct(product: ProductResponse) {
+    if (product.id === undefined) {
+      alert('Product ID is missing. Cannot delete this product.');
+      return;
+    }
+    if (confirm(`Are you sure you want to delete product "${product.name}"?`)) {
+      this.productsService.apiProductsIdDelete(product.id).subscribe(() => {
         this.getProducts();
       });
     }
   }
 
-  onFileChange(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input && input.files && input.files.length > 0) {
-    this.productForm.patchValue({ image: input.files[0] });
+
+  showImagesModal = false;
+  selectedProductForImages: ProductResponse | null = null;
+
+  showImages(product: ProductResponse) {
+    this.selectedProductForImages = product;
+    this.showImagesModal = true;
   }
-}
+
+  productImageFile: File | null = null;
+
+  onProductImageChange(event: any) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files.length > 0) {
+      this.productImageFile = input.files[0];
+    }
+  }
+
+  uploadProductImage() {
+    if (this.selectedProductForImages && this.productImageFile) {
+      this.productsService.apiProductsIdImagesPost(this.selectedProductForImages.id!, this.productImageFile)
+        .subscribe(() => {
+          this.getProducts();
+          this.showImagesModal = false;
+          this.selectedProductForImages = null;
+          this.productImageFile = null;
+        });
+    }
+  }
 }

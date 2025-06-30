@@ -19,10 +19,41 @@ namespace MediatRApi.Controllers
     }
     [HttpPost]
     [ProducesResponseType(201)]
-    public async Task<IActionResult> Post([FromForm] CreateProductCommand command)
+    public async Task<IActionResult> Post(CreateProductCommand command)
     {
       await mediator.Send(command);
       return NoContent();
+    }
+    [HttpPut]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> Put(UpdateProductCommand command)
+    {
+      await mediator.Send(command);
+      return NoContent();
+    }
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> Delete(int id)
+    {
+      await mediator.Send(new DeleteProductCommand(id));
+      return NoContent();
+    }
+    [HttpPost("{id:int}/images")]
+    [ProducesResponseType(201)]
+    public async Task<IActionResult> PostImage(int id, IFormFile file)
+    {
+      using var memoryStream = new MemoryStream();
+
+      await file.CopyToAsync(memoryStream);
+
+      await mediator.Send(new CreateProductImageCommand()
+      {
+        ProductId = id,
+        FileName = file.FileName,
+        Image = memoryStream.ToArray()
+      });
+
+      return Created();
     }
   }
 }

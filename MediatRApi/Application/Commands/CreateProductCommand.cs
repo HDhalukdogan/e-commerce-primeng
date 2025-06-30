@@ -11,7 +11,6 @@ namespace MediatRApi.Application.Commands
     public decimal Price { get; set; }
     public bool IsShow { get; set; } = true;
     public bool IsCarousel { get; set; } = false;
-    public IFormFile? Image { get; set; }
     public int CategoryId { get; set; }
   }
 
@@ -19,13 +18,6 @@ namespace MediatRApi.Application.Commands
   {
     public async Task Handle(CreateProductCommand request, CancellationToken cancellationToken)
     {
-      byte[]? imageBytes = null;
-      if (request.Image != null)
-      {
-        using var memoryStream = new MemoryStream();
-        await request.Image.CopyToAsync(memoryStream, cancellationToken);
-        imageBytes = memoryStream.ToArray();
-      }
 
       var product = new Product
       {
@@ -34,7 +26,6 @@ namespace MediatRApi.Application.Commands
         Price = request.Price,
         IsShow = request.IsShow,
         IsCarousel = request.IsCarousel,
-        Image = imageBytes,
         CategoryId = request.CategoryId
       };
 

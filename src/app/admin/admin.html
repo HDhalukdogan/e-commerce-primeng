@@ -7,13 +7,23 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Name</th>
+        <th>Description</th>
         <th>Image</th>
+        <th>Edit</th>
     </tr>
     </ng-template>
+    <!-- Categories Table -->
     <ng-template pTemplate="body" let-cat>
       <tr>
         <td>{{cat.name}}</td>
-        <td><p-image [src]="'data:image/jpeg;base64,'+cat.image" [alt]="cat.name!" width="100"></p-image></td>
+        <td>{{cat.description}}</td>
+        <td>
+          <p-image [src]="'data:image/jpeg;base64,'+cat.image" [alt]="cat.name!" width="100"></p-image>
+        </td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-text" (click)="editCategory(cat)">Edit</button>
+          <button pButton icon="pi pi-trash" class="p-button-text p-button-danger" (click)="deleteCategory(cat)">Delete</button>
+        </td>
       </tr>
     </ng-template>
   </p-table>
@@ -30,15 +40,23 @@
         <th>Price</th>
         <th>Category</th>
         <th>Image</th>
+        <th>Edit</th>
       </tr>
     </ng-template>
+    <!-- Products Table -->
     <ng-template pTemplate="body" let-prod>
       <tr>
         <td>{{prod.name}}</td>
         <td>{{prod.description}}</td>
         <td>{{prod.price}}</td>
         <td>{{prod.categoryId}}</td>
-        <td><p-image [src]="'data:image/jpeg;base64,'+prod.image" [alt]="prod.name!" width="100"></p-image></td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-text" (click)="showImages(prod)">Show Images</button>
+        </td>
+        <td>
+          <button pButton icon="pi pi-pencil" class="p-button-text" (click)="editProduct(prod)">Edit</button>
+          <button pButton icon="pi pi-trash" class="p-button-text p-button-danger" (click)="deleteProduct(prod)">Delete</button>
+        </td>
       </tr>
     </ng-template>
   </p-table>
@@ -47,6 +65,7 @@
   <p-dialog [(visible)]="displayCategoryModal" [modal]="true" header="Add Category" [style]="{width: '400px'}">
     <form [formGroup]="categoryForm" (ngSubmit)="submitCategory()" class="space-y-4">
       <input formControlName="name" type="text" placeholder="Category Name" class="w-full border rounded px-3 py-2" />
+      <textarea formControlName="description" placeholder="Description" class="w-full border rounded px-3 py-2"></textarea>
       <input type="file" (change)="onCategoryImageChange($event)" class="w-full" />
       <button pButton type="submit" label="Save" class="w-full p-button-info"></button>
     </form>
@@ -62,12 +81,43 @@
         <option [ngValue]="null" disabled>Select Category</option>
         <option *ngFor="let cat of categories" [ngValue]="cat.id">{{cat.name}}</option>
       </select>
-      <input type="file" (change)="onFileChange($event)" class="w-full" />
       <div class="flex gap-4">
         <label><input type="checkbox" formControlName="isShow" /> Show</label>
         <label><input type="checkbox" formControlName="isCarousel" /> Carousel</label>
       </div>
       <button pButton type="submit" label="Save" class="w-full p-button-info"></button>
     </form>
+  </p-dialog>
+
+  <!-- Images Modal -->
+  <p-dialog [(visible)]="showImagesModal" [modal]="true" header="Product Images" [style]="{width: '400px'}" (onHide)="showImagesModal = false">
+    <div *ngIf="selectedProductForImages">
+      <div *ngIf="selectedProductForImages.productImages?.length; else noImages">
+        <div class="flex flex-wrap gap-4 justify-center">
+          <ng-container *ngFor="let img of selectedProductForImages.productImages">
+            <p-image 
+              [src]="'data:image/jpeg;base64,'+img.image"
+              [alt]="img.fileName!"
+              width="150"
+              class="mb-2"
+            ></p-image>
+          </ng-container>
+        </div>
+      </div>
+      <ng-template #noImages>
+        <div class="text-gray-500 text-center">No images for this product.</div>
+      </ng-template>
+      <div class="mt-4">
+        <input type="file" (change)="onProductImageChange($event)" />
+        <button 
+          pButton 
+          type="button" 
+          label="Upload" 
+          class="mt-2 w-full p-button-info"
+          [disabled]="!productImageFile"
+          (click)="uploadProductImage()">
+        </button>
+      </div>
+    </div>
   </p-dialog>
 </div>

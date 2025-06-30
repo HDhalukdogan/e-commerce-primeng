@@ -14,7 +14,7 @@ namespace MediatRApi.Application.Queries
   {
     public async Task<IEnumerable<ProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-      var products = await context.Products
+      var products = await context.Products.Include(s=>s.ProductImages)
           .AsNoTracking()
           .ToListAsync(cancellationToken);
 

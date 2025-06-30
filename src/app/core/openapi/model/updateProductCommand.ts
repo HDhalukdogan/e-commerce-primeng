@@ -7,18 +7,15 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ProductImageResponse } from './productImageResponse';
 
 
-export interface ProductResponse { 
+export interface UpdateProductCommand { 
     id?: number;
     name?: string | null;
     description?: string | null;
-    price?: number;
-    isShow?: boolean;
-    isCarousel?: boolean;
-    image?: string | null;
-    categoryId?: number;
-    productImages?: Array<ProductImageResponse> | null;
+    price?: number | null;
+    isShow?: boolean | null;
+    isCarousel?: boolean | null;
+    categoryId?: number | null;
 }
 

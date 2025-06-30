@@ -24,5 +24,19 @@ namespace MediatRApi.Controllers
       await mediator.Send(command);
       return NoContent();
     }
+    [HttpPut]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> Put([FromForm] UpdateCategoryCommand command)
+    {
+      await mediator.Send(command);
+      return NoContent();
+    }
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> Delete(int id)
+    {
+      await mediator.Send(new DeleteCategoryCommand(id));
+      return NoContent();
+    }
   }
 }
