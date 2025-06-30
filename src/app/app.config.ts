@@ -6,6 +6,8 @@ import Aura from '@primeng/themes/aura';
 
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
+import { APIS, BASE_PATH } from './core/openapi';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,10 +16,15 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Aura
-            }
-        })
+    providePrimeNG({
+      theme: {
+        preset: Aura
+      }
+    }),
+    APIS,
+    {
+      provide: BASE_PATH,
+      useValue: environment.apiUrl
+    },
   ]
 };

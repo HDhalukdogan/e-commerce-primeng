@@ -7,6 +7,10 @@ import { Contact } from './contact/contact';
 export const routes: Routes = [
     { path: '', component: Home },
     { path: 'about', component: About },
-    { path: 'contact', component: Contact    },
+    { path: 'contact', component: Contact },
+    {
+        path: 'admin', loadChildren: () => import('./admin/routes')
+            .then(m => m.adminRoutes)
+    },
     { path: '**', redirectTo: '/' }
 ];

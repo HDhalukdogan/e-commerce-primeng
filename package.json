@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "api-generate": "java -jar openapi-generator-cli-7.12.0.jar generate -i http://localhost:5000/swagger/v1/swagger.json -g typescript-angular --type-mappings=DateTime=Date --additional-properties=modelPropertyNaming=camelCase -o ./src/app/core/openapi"
   },
   "private": true,
   "dependencies": {
