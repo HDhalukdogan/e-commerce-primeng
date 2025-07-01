@@ -3,6 +3,7 @@ export * from './createDemoEntityCommand';
 export * from './createProductCommand';
 export * from './homePageResponse';
 export * from './homeProduct';
+export * from './loginDto';
 export * from './productImageResponse';
 export * from './productResponse';
 export * from './updateDemoEntityCommand';

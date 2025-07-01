@@ -9,8 +9,8 @@
  */
 
 
-export interface UpdateDemoEntityCommand { 
-    id?: number;
-    name?: string | null;
+export interface LoginDto { 
+    userName?: string | null;
+    password?: string | null;
 }
 

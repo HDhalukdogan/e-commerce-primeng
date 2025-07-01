@@ -1,5 +1,5 @@
 /**
- * MediatRApi
+ * BasicAuth
  *
  * 
  *
@@ -45,6 +45,9 @@ export class CategoriesService extends BaseService {
     public apiCategoriesGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'text/plain',
@@ -100,6 +103,9 @@ export class CategoriesService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
@@ -149,6 +155,9 @@ export class CategoriesService extends BaseService {
     public apiCategoriesPost(name?: string, description?: string, image?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
@@ -229,6 +238,9 @@ export class CategoriesService extends BaseService {
     public apiCategoriesPut(id?: number, name?: string, description?: string, image?: Blob, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);

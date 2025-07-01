@@ -2,12 +2,14 @@ using MediatR;
 using MediatRApi.Application.Commands;
 using MediatRApi.Application.Common.Responses;
 using MediatRApi.Application.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediatRApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
+  [Authorize]
   public class ProductsController(IMediator mediator) : ControllerBase
   {
     [HttpGet]

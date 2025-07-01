@@ -1,5 +1,5 @@
 /**
- * MediatRApi
+ * BasicAuth
  *
  * 
  *
@@ -52,6 +52,9 @@ export class ProductsService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'text/plain',
             'application/json',
@@ -101,6 +104,9 @@ export class ProductsService extends BaseService {
     public apiProductsHomePageGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'text/plain' | 'application/json' | 'text/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
             'text/plain',
@@ -156,6 +162,9 @@ export class ProductsService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
@@ -207,6 +216,9 @@ export class ProductsService extends BaseService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
@@ -279,6 +291,9 @@ export class ProductsService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
@@ -338,6 +353,9 @@ export class ProductsService extends BaseService {
     public apiProductsPut(updateProductCommand?: UpdateProductCommand, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);

@@ -1,5 +1,5 @@
 /**
- * MediatRApi
+ * BasicAuth
  *
  * 
  *
@@ -47,6 +47,9 @@ export class DemoEntitiesService extends BaseService {
     public apiDemoEntitiesGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
@@ -99,6 +102,9 @@ export class DemoEntitiesService extends BaseService {
 
         let localVarHeaders = this.defaultHeaders;
 
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
+
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
         if (localVarHttpHeaderAcceptSelected !== undefined) {
@@ -149,6 +155,9 @@ export class DemoEntitiesService extends BaseService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
@@ -201,6 +210,9 @@ export class DemoEntitiesService extends BaseService {
         }
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
@@ -261,6 +273,9 @@ export class DemoEntitiesService extends BaseService {
     public apiDemoEntitiesPost(createDemoEntityCommand?: CreateDemoEntityCommand, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: undefined, context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarHeaders = this.defaultHeaders;
+
+        // authentication (basic) required
+        localVarHeaders = this.configuration.addCredentialToHeaders('basic', 'Authorization', localVarHeaders, 'Basic ');
 
         const localVarHttpHeaderAcceptSelected: string | undefined = options?.httpHeaderAccept ?? this.configuration.selectHeaderAccept([
         ]);
