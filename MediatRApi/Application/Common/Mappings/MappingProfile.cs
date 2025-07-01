@@ -12,6 +12,8 @@ public class MappingProfile : Profile
     CreateMap<DemoEntity, DemoEntityResponse>();
     CreateMap<Category, CategoryResponse>();
     CreateMap<Product, ProductResponse>();
+    CreateMap<Product, HomeProduct>()
+      .ForMember(dest=>dest.CoverImage, opt => opt.MapFrom(src => src.ProductImages.FirstOrDefault(s=>s.IsCover).Image));
     CreateMap<ProductImage, ProductImageResponse>();
   }
 }

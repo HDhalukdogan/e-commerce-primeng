@@ -7,17 +7,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { HomeProduct } from './homeProduct';
 import { ProductImageResponse } from './productImageResponse';
 
 
-export interface ProductResponse { 
-    id?: number;
-    name?: string | null;
-    description?: string | null;
-    price?: number;
-    isShow?: boolean;
-    isCarousel?: boolean;
-    categoryId?: number;
-    productImages?: Array<ProductImageResponse> | null;
+export interface HomePageResponse { 
+    homeProducts?: Array<HomeProduct> | null;
+    carouselImages?: Array<ProductImageResponse> | null;
 }
 

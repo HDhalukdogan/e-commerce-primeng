@@ -13,6 +13,8 @@ index.ts
 model/categoryResponse.ts
 model/createDemoEntityCommand.ts
 model/createProductCommand.ts
+model/homePageResponse.ts
+model/homeProduct.ts
 model/models.ts
 model/productImageResponse.ts
 model/productResponse.ts

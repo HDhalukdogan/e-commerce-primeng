@@ -17,6 +17,13 @@ namespace MediatRApi.Controllers
       var response = await mediator.Send(new GetProductsQuery());
       return Ok(response);
     }
+    [HttpGet("home-page")]
+    [ProducesResponseType<HomePageResponse>(200)]
+    public async Task<IActionResult> GetHomePage()
+    {
+      var response = await mediator.Send(new GetHomePageQuery());
+      return Ok(response);
+    }
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<IActionResult> Post(CreateProductCommand command)

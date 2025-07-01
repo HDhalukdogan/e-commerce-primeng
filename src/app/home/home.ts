@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { ProductImageResponse, ProductResponse, ProductsService } from '../core/openapi';
+import { HomePageResponse, HomeProduct, ProductImageResponse, ProductResponse, ProductsService } from '../core/openapi';
 import { ImageModule } from 'primeng/image';
 
 @Component({
@@ -15,36 +15,28 @@ import { ImageModule } from 'primeng/image';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
-  private http = inject(HttpClient);
   private productsService = inject(ProductsService);
 
-  carouselImages: string[] = [];
-  products: any[] = [];
-  productResponses: ProductResponse[] = [];
-  carouselProductImages: ProductImageResponse[] = [];
+  homePageResponse: HomePageResponse = {
+    carouselImages: [],
+    homeProducts: []
+  } ;
 
   displayModal = false;
-  selectedProduct: any = null;
+  selectedProduct: HomeProduct | null = null;
 
   ngOnInit(): void {
-    this.loadProducts();
-    this.http.get<any>('data/products.json').subscribe(data => {
-      this.carouselImages = data.carouselImages;
-      this.products = data.products;
-    });
+    this.loadHomepage();
   }
 
 
-  loadProducts() {
-    this.productsService.apiProductsGet().subscribe(products => {
-      this.productResponses = products;
-      this.carouselProductImages = products
-        .filter(product => product.isCarousel)
-        .flatMap(product => product.productImages?.filter(image => image.isCover) ?? []);
+  loadHomepage() {
+    this.productsService.apiProductsHomePageGet().subscribe(response => {
+      this.homePageResponse = response;
     });
   }
 
-  showProduct(product: any) {
+  showProduct(product: HomeProduct) {
     this.selectedProduct = product;
     this.displayModal = true;
   }

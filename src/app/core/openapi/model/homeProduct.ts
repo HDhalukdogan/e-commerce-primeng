@@ -10,13 +10,12 @@
 import { ProductImageResponse } from './productImageResponse';
 
 
-export interface ProductResponse { 
+export interface HomeProduct { 
     id?: number;
     name?: string | null;
     description?: string | null;
     price?: number;
-    isShow?: boolean;
-    isCarousel?: boolean;
+    coverImage?: string | null;
     categoryId?: number;
     productImages?: Array<ProductImageResponse> | null;
 }

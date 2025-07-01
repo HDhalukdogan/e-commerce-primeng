@@ -9,9 +9,8 @@ namespace MediatRApi.Application.Common.Responses
     public decimal Price { get; set; }
     public bool IsShow { get; set; } = true;
     public bool IsCarousel { get; set; } = false;
-    public byte[]? Image { get; set; }
     public int CategoryId { get; set; }
-    public ICollection<ProductImageResponse>? ProductImages { get; set; }
+    public ICollection<ProductImageResponse> ProductImages { get; set; } = [];
   }
   public class ProductImageResponse
   {

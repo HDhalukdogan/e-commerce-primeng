@@ -141,11 +141,6 @@ export class Admin implements OnInit {
     }
   }
 
-  onFileChange(event: Event) {
-    const input = event.target as HTMLInputElement;
-    if (input && input.files && input.files.length > 0) {
-    }
-  }
   onCategoryImageChange(event: any) {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files.length > 0) {
