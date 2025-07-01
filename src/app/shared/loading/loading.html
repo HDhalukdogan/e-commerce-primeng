@@ -1,0 +1,15 @@
+@if(loading$ | async) {
+
+@if(customLoadingIndicator) {
+
+<ng-container *ngTemplateOutlet="customLoadingIndicator" />
+
+} @else {
+
+<div class="splash-screen">
+    <span class="spinner"></span>
+</div>
+
+}
+
+}

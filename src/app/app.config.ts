@@ -9,13 +9,14 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { APIS, BASE_PATH } from './core/openapi';
 import { environment } from '../environments/environment';
 import { tokenInterceptor } from './interceptors/token-interceptor';
+import { loadingInterceptorFn } from './shared/loading/loading-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideHttpClient(withInterceptors([tokenInterceptor, loadingInterceptorFn])),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
